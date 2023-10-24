@@ -13,22 +13,23 @@ increase = ["", 0]
 pl1=[]
 month_counter=0
 
-
+#Converting the CSV file
 budget_data_csv = os.path.join("Resources", "budget_data.csv")
-
 output_file = "Analysis/output.txt"
-
 with open(budget_data_csv) as csvfile:  
     csvreader = csv.DictReader(csvfile)
 
     for row in csvreader:
 
         pl=(int(row["Profit/Losses"]))
-        
+
+        # Counts the number of rows in the dataset        
         row_number += 1
-        
+
+        # Takes the sum of the profit/losses        
         sum += pl
-        
+
+        # Calculates the average difference in profit/losses        
         if previouse_profit != 0:
             change=pl - previouse_profit
             month_counter += 1
@@ -36,14 +37,17 @@ with open(budget_data_csv) as csvfile:
         
         previouse_profit=pl
 
+        # Finds the max value and returns the date
         if change > increase[1]:
             increase[1]= change
             increase[0] = row['Date']
 
+        # Finds the min value and returns the date
         if change<decrease[1]:
             decrease[1]= change
             decrease[0] = row['Date']
-        
+
+#Makes output txt file and display        
 output = f"""
 Financial Analysis
 ----------------------------
